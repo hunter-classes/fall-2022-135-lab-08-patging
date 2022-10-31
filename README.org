@@ -1,10 +1,10 @@
 * Fall 2022 - Lab 08
 
-* Last name:
+* Last name: Ging 
 
-* First name:
+* First name: Patrick
 
-* GitHub username:
+* GitHub username: patging
 
 * Notes:
 
