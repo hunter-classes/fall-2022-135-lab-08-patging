@@ -8,7 +8,6 @@
 
 * Notes:
 
-
   
 * General instructions:
 - Fill in your name and GitHub username on top.
