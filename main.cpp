@@ -13,7 +13,7 @@ int main() {
 
     //testing tasks a through f
 
-    const std::string IMAGE_PATH = "./image1.pgm";
+    const std::string IMAGE_PATH = "./image2.pgm";
 
     invert(IMAGE_PATH); // task A 
 
