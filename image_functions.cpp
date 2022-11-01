@@ -34,7 +34,7 @@ void invert(std::string filename) {
         }
     }
 
-    writeImage(filename, image_data, h,w); // wriitng to the image
+    writeImage("taskA.pgm", image_data, h,w); // wriitng to the image
 }
 
 void invert_half(std::string filename) {
@@ -47,7 +47,7 @@ void invert_half(std::string filename) {
 
     readImage(filename, image_data,h,w); // marhsalling to img_data, h,w
 
-    std::cout << h << "x" << w << std::endl;
+    //std::cout << h << "x" << w << std::endl;
 
     for(int i=0;i<h;i++) {
         // interating through each row
@@ -64,7 +64,7 @@ void invert_half(std::string filename) {
         }
     }
 
-    writeImage(filename, image_data, h,w); // wriitng to the image
+    writeImage("taskB.pgm", image_data, h,w); // wriitng to the image
 }
 
 void box(std::string filename) {
@@ -101,7 +101,7 @@ void box(std::string filename) {
         }
     }
 
-    writeImage(filename, image_data, h,w); // wriitng to the image
+    writeImage("taskC.pgm", image_data, h,w); // wriitng to the image
 }
 
 void frame(std::string filename) {
@@ -143,12 +143,12 @@ void frame(std::string filename) {
         }
     }
 
-    writeImage(filename, image_data, h,w); // wriitng to the image
+    writeImage("taskD.pgm", image_data, h,w); // wriitng to the image
 }
 
 
 void scale(std::string filename) {
-    // scales the image by 200%
+    // scales the image by 200% and writes to the file
 
     int image_data[MAX_H][MAX_W];
     int new_image_data[MAX_H][MAX_W];
@@ -163,13 +163,58 @@ void scale(std::string filename) {
         for (int j = 0; j<w; j++) {
             // iterating through each col
             
+            new_image_data[2*i][2*j] = image_data[i][j];
+            new_image_data[2*i][2*j + 1] = image_data[i][j];
+            // for each val we also add the extra item next to it
+            // doubling the length of the pixel arr
+
+            new_image_data[2*i+1][2*j] = image_data[i][j];
+            new_image_data[2*i+1][2*j + 1] = image_data[i][j];
+            // same as above, except we're doubling the length
         }
     }
-    
+
+    writeImage("taskE.pgm", new_image_data, h*2,w*2); // wriitng to the image    
+
     return;
 }
 
-int main() {
-    frame("./inImage1.pgm");
-    return 0;
+void pixelate(std::string filename) {
+    /*
+        'pixelates' a pgm image via writing every 2x2 pixel cluster image
+        to be the average pixel value of that said cluster; then writes to the file
+    */
+
+    int image_data[MAX_H][MAX_W];
+    int new_image_data[MAX_H][MAX_W];
+    // space may be an issue in the future
+
+    int h, w; // height and width respectively
+
+    readImage(filename, image_data,h,w); // marhsalling to img_data, h,w
+
+    // file processing
+
+    int average; // average of each 2x2 pixel cluster
+
+    for(int i=0;i<h - (h%2);i+=2) { // h%2 is to ensure evenness
+        // interating through each row
+        for (int j = 0; j<w - (w%2); j+=2) {
+            // iterating through each col
+
+            //average of the four pixels
+            average = (image_data[i][j] + image_data[i+1][j] + image_data[i][j+1] + image_data[i+1][j+1]) / 4;
+
+            new_image_data[i][j] = average;
+            new_image_data[i+1][j] = average;
+            new_image_data[i][j+1] = average;
+            new_image_data[i+1][j+1] = average;
+
+            // updating the cluster ^^
+        }
+    }
+
+    writeImage("taskF.pgm", new_image_data, h,w); // wriitng to the image    
+
+    return;
 }
